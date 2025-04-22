@@ -8,6 +8,11 @@ export interface RemToPxOptions {
    * @default 16
    */
   baseFontSize?: number
+
+  /**
+  * @default px
+  */
+  unit?: 'px' | 'rem' | 'rpx' | 'upx' | 'em' | 'cm' | 'mm' | '%'
 }
 
 /**
@@ -16,6 +21,7 @@ export interface RemToPxOptions {
 export const presetRemToPx = definePreset((options: RemToPxOptions = {}) => {
   const {
     baseFontSize = 16,
+    unit = 'px'
   } = options
 
   return {
@@ -24,7 +30,7 @@ export const presetRemToPx = definePreset((options: RemToPxOptions = {}) => {
       util.entries.forEach((i) => {
         const value = i[1]
         if (typeof value === 'string' && remRE.test(value))
-          i[1] = value.replace(remRE, (_, p1) => `${p1 * baseFontSize}px`)
+          i[1] = value.replace(remRE, (_, p1) => `${p1 * baseFontSize}${unit}`)
       })
     },
   }
